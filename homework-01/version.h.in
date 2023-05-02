@@ -1,0 +1,10 @@
+
+#pragma once
+
+//#cmakedefine PROJECT_VERSION_PATCH @PROJECT_VERSION_PATCH@
+
+namespace HomeWork01 {
+
+constexpr static int kVersion = @PROJECT_VERSION_PATCH@;
+
+} // namespace HomeWork01
