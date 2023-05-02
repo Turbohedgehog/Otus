@@ -1,0 +1,8 @@
+
+#pragma once
+
+namespace HomeWork01 {
+
+constexpr static int kVersion = @PROJECT_VERSION_PATCH@;
+
+} // namespace HomeWork01
