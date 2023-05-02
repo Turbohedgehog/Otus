@@ -1,0 +1,41 @@
+name: '[Homework-01] C++ CI'
+
+on:
+  push:
+    branches:
+      # Todo: Use the main branch in different workflow
+      - main
+      - f/homework-01
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+      - run: cd homework-01 && cmake . -DPATCH_VERSION=${{ github.run_number }}
+      - run: cd homework-01 && cmake --build .
+      - run: cd homework-01 && cmake --build . --target test
+      - run: cd homework-01 && cmake --build . --target package
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.run_number }}
+          release_name: Release ${{ github.run_number }}
+          draft: false
+          prerelease: false
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./homework-01/helloworld-0.0.${{ github.run_number }}-Linux.deb
+          asset_name: helloworld-0.0.${{ github.run_number }}-Linux.deb
+          asset_content_type: application/vnd.debian.binary-package
