@@ -36,6 +36,7 @@ class IPFilter {
   void FilterAny(IPv4::value_type value);
 
   friend std::ostream& operator<<(std::ostream& out, const IPFilter& ip_filter);
+  std::vector<IPv4> GetFiltered() const;
 
  private:
   std::vector<IPv4> ip_addresses_;

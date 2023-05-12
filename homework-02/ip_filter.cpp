@@ -61,4 +61,18 @@ std::ostream& operator<<(std::ostream& out, const IPFilter& ip_filter) {
   return out;
 }
 
+std::vector<IPv4> IPFilter::GetFiltered() const {
+  std::vector<IPv4> filtered;
+  filtered.reserve(ip_addresses_.size());
+  for(const auto& ip : ip_addresses_) {
+    if (filter_ && !filter_(ip)) {
+      continue;
+    }
+
+    filtered.push_back(ip);
+  }
+
+  return filtered;
+}
+
 }  // namespace homework_02
