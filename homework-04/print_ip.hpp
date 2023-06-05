@@ -84,11 +84,25 @@ template <typename ...T> struct is_mono_tuple<std::tuple<T...>> {
   static constexpr bool value = are_all_types_same<T...>::value;
 };
 
+template <typename Tuple, int N>
+struct out_tuple {
+  static void out(const Tuple& t) {
+    std::cout << std::get<std::tuple_size_v<Tuple> - N>(t) << '.';
+    out_tuple<Tuple, N - 1>::out(t);
+  }
+};
+
+template <typename Tuple>
+struct out_tuple<Tuple, 1> {
+  static void out(const Tuple& t) {
+    std::cout << std::get<std::tuple_size_v<Tuple> - 1>(t);
+  }
+};
+
 template <typename T, std::enable_if_t<is_mono_tuple<T>::value, int> = 0>
-void print_ip(T ) {
-  std::cout << "asd" << "\n";
+void print_ip(T value) {
+  out_tuple<T, std::tuple_size_v<T>>::out(value);
+  std::cout << "\n";
 }
-
-
 
 }  // namespace homework_04
