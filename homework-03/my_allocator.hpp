@@ -1,8 +1,11 @@
+#pragma once
+
 #include <vector>
 #include <bitset>
 #include <stdlib.h>
 #include <exception>
 #include <list>
+#include <cstring>
 
 namespace homework_03 {
 
@@ -15,14 +18,19 @@ class MyChunkBase {
   static constexpr std::size_t kChunkSize = kItemSize * Size;
 
   MyChunkBase() {
-    chunk_ = reinterpret_cast<value_type*>(malloc(MyChunkBase::kChunkSize));
+    chunk_ = static_cast<value_type*>(malloc(MyChunkBase::kChunkSize));
     if (!chunk_) {
       throw std::bad_alloc();
     }
   }
 
-  MyChunkBase(const MyChunkBase&) = delete;
-  MyChunkBase(MyChunkBase&&) = default;
+  MyChunkBase(const MyChunkBase& other) : MyChunkBase() {
+    std::memcpy(chunk_, other.chunk_, MyChunkBase::kChunkSize);
+  };
+
+  MyChunkBase(MyChunkBase&& other) {
+    std::swap(chunk_, other.chunk_);
+  };
 
   ~MyChunkBase() {
     free(chunk_);
@@ -129,8 +137,19 @@ class MyExpandableChunkHolder {
   using chunk_type = Chunk;
   using value_type = typename Chunk::value_type;
 
+  MyExpandableChunkHolder() = default;
+
+  MyExpandableChunkHolder(const MyExpandableChunkHolder& other) {
+    for (auto* other_chunk : other.chunks_) {
+      auto* chunk = new Chunk(*other_chunk);
+      chunks_.push_back(chunk);
+    }
+  }
+
+  MyExpandableChunkHolder(MyExpandableChunkHolder&&) = default;
+
   ~MyExpandableChunkHolder() {
-    for (auto* chunk : chunks_) {
+    for (auto chunk : chunks_) {
       delete chunk;
     }
   }
@@ -184,10 +203,14 @@ class MyAllocator {
       MyBasicChunkHolder<chunk_type>>;
 
   MyAllocator() = default;
+  MyAllocator(const MyAllocator&) = default;
+  MyAllocator(MyAllocator&&) = default;
+  
   template <typename U>
 	MyAllocator(const MyAllocator<U, ChunkSize, AllowExpand, AllowItemsDeallocation>&) {};
   template <typename U>
-	MyAllocator(const MyAllocator<U, ChunkSize, AllowExpand, AllowItemsDeallocation>&&) {};
+	MyAllocator(MyAllocator<U, ChunkSize, AllowExpand, AllowItemsDeallocation>&&) {};
+  
  
   using value_type = T;
   using size_type = std::size_t;

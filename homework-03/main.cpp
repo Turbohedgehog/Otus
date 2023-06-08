@@ -38,7 +38,7 @@ int main (int, char **) {
   // My container with custom allocator
   homework_03::MyContainer<int, my_allocator> my_container_ext;
   for (int i = 0; i < 10; ++i) {
-    my_container.push_back(i);
+    my_container_ext.push_back(i);
   }
 
   for (const auto& v : my_container) {

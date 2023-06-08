@@ -1,3 +1,4 @@
+#pragma once
 
 #include <bits/allocator.h>
 
@@ -33,8 +34,8 @@ struct MyIterator {
     return *this;
   }
 
-  iterator_type& operator++(int) {
-    iterator_type& res = *this;
+  iterator_type operator++(int) {
+    iterator_type res = *this;
     node_ = node_->next;
     return res;
   }
@@ -78,8 +79,8 @@ struct MyContIterator {
     return *this;
   }
 
-  iterator_type& operator++(int) {
-    iterator_type& res = *this;
+  iterator_type operator++(int) {
+    iterator_type res = *this;
     node_ = node_->next;
     return res;
   }
@@ -152,6 +153,7 @@ class MyContainer {
   void clear() {
     for (auto node = head_; node; ) {
       auto* next_node = node->next;
+      node->value.~T();
       std::allocator_traits<node_allocator>::destroy(allocator_, node);
       node = next_node;
     }
