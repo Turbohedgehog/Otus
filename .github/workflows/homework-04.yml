@@ -1,0 +1,57 @@
+name: '[Homework-04] print_ip'
+
+on:
+  push:
+    branches:
+      - f/homework-04
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:        
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+      - name: Doxygen Action
+        uses: mattnotmitt/doxygen-action@v1.1.0
+        with:
+            doxyfile-path: Doxyfile
+            working-directory: homework-04/
+      - name: GH Pages Deployment
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          #publish_dir: ../doc
+          #publish_dir: ./doc/html/
+          #publish_dir: ./public
+          #publish_dir: .
+          publish_dir: homework-04/doc
+          enable_jekyll: false
+          allow_empty_commit: false
+          force_orphan: true
+          publish_branch: gh-pages
+
+      - run: cd homework-04 && cmake . -DPATCH_VERSION=${{ github.run_number }}
+      - run: cd homework-04 && cmake --build .
+      - run: cd homework-04 && cmake --build . --target package
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: hw_04_${{ github.run_number }}
+          release_name: HW-04 Release ${{ github.run_number }}
+          draft: false
+          prerelease: false
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./homework-04/print_ip-0.0.${{ github.run_number }}-Linux.deb
+          asset_name: print_ip-0.0.${{ github.run_number }}-Linux.deb
+          asset_content_type: application/vnd.debian.binary-package
