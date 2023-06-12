@@ -25,7 +25,7 @@ jobs:
           #publish_dir: ./doc/html/
           #publish_dir: ./public
           publish_dir: .
-          enable_jekyll: false
+          enable_jekyll: true
           allow_empty_commit: true
           force_orphan: true
           publish_branch: gh-pages
