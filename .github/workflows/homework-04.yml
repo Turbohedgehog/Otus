@@ -22,11 +22,12 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./doc/html/
+          #publish_dir: ./doc/html/
+          publish_dir: ./public
           enable_jekyll: false
-          allow_empty_commit: false
+          allow_empty_commit: true
           force_orphan: true
-          publish_branch: gh-pages
+          #publish_branch: gh-pages
 
       - run: cd homework-04 && cmake .
       - run: cd homework-04 && cmake --build .
@@ -36,8 +37,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.run_number }}
-          release_name: Release ${{ github.run_number }}
+          tag_name: hw_04_${{ github.run_number }}
+          release_name: HW-04 Release ${{ github.run_number }}
           draft: false
           prerelease: false
       - name: Upload Release Asset
