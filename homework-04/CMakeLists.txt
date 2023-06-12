@@ -5,14 +5,11 @@ set(PROJECT_VESRION 0.0.${PATCH_VERSION})
 
 project(print_ip VERSION ${PROJECT_VESRION})
 
+add_executable(${PROJECT_NAME} main.cpp)
 
-set(PROJECT_CLI ${PROJECT_NAME}_cli)
-
-add_executable(${PROJECT_CLI} main.cpp)
-
-set_target_properties(${PROJECT_CLI} PROPERTIES
+set_target_properties(${PROJECT_NAME} PROPERTIES
     CXX_STANDARD 17
     CXX_STANDARD_REQUIRED ON
 )
 
-target_link_libraries(${PROJECT_CLI} PRIVATE)
+target_link_libraries(${PROJECT_NAME} PRIVATE)
