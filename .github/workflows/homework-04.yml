@@ -26,7 +26,7 @@ jobs:
           #publish_dir: ./doc/html/
           #publish_dir: ./public
           #publish_dir: .
-          publish_dir: homework-04/doc
+          publish_dir: homework-04
           enable_jekyll: false
           allow_empty_commit: false
           force_orphan: true
