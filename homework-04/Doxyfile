@@ -6,7 +6,7 @@
 DOXYFILE_ENCODING      = UTF-8
 PROJECT_NAME           = "print_ip"
 PROJECT_NUMBER         = 1.0
-PROJECT_BRIEF          = "C++ Implementation of SFINAE pront_ip functions"
+PROJECT_BRIEF          = "C++ SFINAE using"
 PROJECT_LOGO           =
 OUTPUT_DIRECTORY       = ./doc/
 CREATE_SUBDIRS         = YES
