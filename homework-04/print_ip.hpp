@@ -1,9 +1,10 @@
 #pragma once
 
-#include <iostream>
-#include <type_traits>
-#include <tuple>
 #include <cstdint>
+#include <iomanip>
+#include <iostream>
+#include <tuple>
+#include <type_traits>
 
 namespace homework_04 {
 
@@ -18,8 +19,10 @@ void print_ip(T value) {
 
 template <typename T, std::enable_if_t<std::is_same_v<T, int16_t>, int> = 0>
 void print_ip(T value) {
+  const auto default_precision {std::cout.precision()};
   auto v = static_cast<float>(value);
-  std::cout << v << "\n";
+  std::cout << std::setprecision(1) << std::fixed << v << "\n";
+  std::cout << std::setprecision(default_precision);
 }
 
 template <typename T, std::enable_if_t<std::is_integral_v<T> && sizeof(T) >= sizeof(int32_t), int> = 0>
@@ -72,15 +75,15 @@ void print_ip(T value) {
 }
 
 template <typename T, typename... Ts>
-struct are_all_types_same {
+struct are_types_same {
   using type = T;
-  //using next_are_all_types_same = typename are_all_types_same<Ts...>; // MSVC 2019
-  using next_are_all_types_same = are_all_types_same<Ts...>; // GCC 11
-  static constexpr bool value = next_are_all_types_same::value && std::is_same_v<type, typename next_are_all_types_same::type>;
+  //using are_types_same = typename are_types_same<Ts...>; // MSVC 2019
+  using next_are_types_same = are_types_same<Ts...>; // GCC 11
+  static constexpr bool value = next_are_types_same::value && std::is_same_v<type, typename next_are_types_same::type>;
 };
 
 template <typename T1, typename T2>
-struct are_all_types_same<T1, T2> {
+struct are_types_same<T1, T2> {
   using type = T2;
   static constexpr bool value = std::is_same_v<T1, T2>;
 };
@@ -88,7 +91,7 @@ struct are_all_types_same<T1, T2> {
 template <typename> struct is_mono_tuple: std::false_type {};
 
 template <typename ...T> struct is_mono_tuple<std::tuple<T...>> {
-  static constexpr bool value = are_all_types_same<T...>::value;
+  static constexpr bool value = are_types_same<T...>::value;
 };
 
 template <typename Tuple, int N>
