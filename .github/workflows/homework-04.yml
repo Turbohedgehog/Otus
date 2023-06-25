@@ -28,8 +28,8 @@ jobs:
           #publish_dir: .
           #publish_dir: homework-04
           #publish_dir: ./html
-          publish_dir: ../doc/html/.
-          destination_dir: docs
+          publish_dir: ./doc/html/.
+          #destination_dir: docs
           enable_jekyll: false
           allow_empty_commit: false
           force_orphan: true
