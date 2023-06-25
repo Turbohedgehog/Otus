@@ -17,7 +17,7 @@ jobs:
         uses: mattnotmitt/doxygen-action@v1.1.0
         with:
             doxyfile-path: Doxyfile
-            working-directory: homework-04/
+            #working-directory: homework-04/
       - name: GH Pages Deployment
         uses: peaceiris/actions-gh-pages@v3
         with:
