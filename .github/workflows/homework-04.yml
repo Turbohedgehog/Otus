@@ -16,8 +16,9 @@ jobs:
       - name: Doxygen Action
         uses: mattnotmitt/doxygen-action@v1.1.0
         with:
-            doxyfile-path: Doxyfile
-            working-directory: homework-04/
+            doxyfile-path: "./Doxyfile"
+            working-directory: "."
+            #working-directory: homework-04/
       - name: GH Pages Deployment
         uses: peaceiris/actions-gh-pages@v3
         with:
@@ -27,8 +28,9 @@ jobs:
           #publish_dir: ./public
           #publish_dir: .
           #publish_dir: homework-04
-          publish_dir: ./html
-          destination_dir: docs
+          #publish_dir: ./html
+          publish_dir: "./docs/html/."
+          #destination_dir: docs
           enable_jekyll: false
           allow_empty_commit: false
           force_orphan: true

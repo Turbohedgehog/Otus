@@ -11,21 +11,7 @@ namespace homework_04 {
 /** Brief description which ends at this dot. Details follow
  *  here.
  */
-template <typename T, std::enable_if_t<std::is_same_v<T, int8_t>, int> = 0>
-void print_ip(T value) {
-  auto v = static_cast<uint8_t>(value);
-  std::cout << +v << "\n";
-}
-
-template <typename T, std::enable_if_t<std::is_same_v<T, int16_t>, int> = 0>
-void print_ip(T value) {
-  const auto default_precision {std::cout.precision()};
-  auto v = static_cast<float>(value);
-  std::cout << std::setprecision(1) << std::fixed << v << "\n";
-  std::cout << std::setprecision(default_precision);
-}
-
-template <typename T, std::enable_if_t<std::is_integral_v<T> && sizeof(T) >= sizeof(int32_t), int> = 0>
+template <typename T, std::enable_if_t<std::is_integral_v<T>, int> = 0>
 void print_ip(T value) {
   union {
     T int_ip;
