@@ -1,0 +1,35 @@
+cmake_minimum_required(VERSION 3.10)
+
+set(PATCH_VERSION "1" CACHE INTERNAL "Patch version")
+set(PROJECT_VESRION 0.0.${PATCH_VERSION})
+
+project(editor VERSION ${PROJECT_VESRION})
+
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../yaml-cpp [EXCLUDE_FROM_ALL])
+
+file (
+    GLOB
+    PROJECT_SOURCE_FILES
+    *.cpp
+)
+
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../yaml-cpp/include)
+
+add_executable(${PROJECT_NAME} ${PROJECT_SOURCE_FILES})
+
+set_target_properties(${PROJECT_NAME} PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED ON
+)
+
+target_link_libraries(${PROJECT_NAME} PRIVATE yaml-cpp)
+
+set(CPACK_GENERATOR DEB)
+
+set(CPACK_PACKAGE_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")
+set(CPACK_PACKAGE_VERSION_MINOR "${PROJECT_VERSION_MINOR}")
+set(CPACK_PACKAGE_VERSION_PATCH "${PROJECT_VERSION_PATCH}")
+
+set(CPACK_PACKAGE_CONTACT unlinker@mail.ru)
+
+include(CPack)
