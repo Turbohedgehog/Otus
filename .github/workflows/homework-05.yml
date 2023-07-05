@@ -17,6 +17,7 @@ jobs:
         uses: mattnotmitt/doxygen-action@v1.1.0
         with:
             doxyfile-path: Doxyfile
+            working-directory: .
             #working-directory: homework-05/
       - name: GH Pages Deployment
         uses: peaceiris/actions-gh-pages@v3
@@ -38,8 +39,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: hw_04_${{ github.run_number }}
-          release_name: HW-04 Release ${{ github.run_number }}
+          tag_name: hw_05_${{ github.run_number }}
+          release_name: HW-05 Release ${{ github.run_number }}
           draft: false
           prerelease: false
       - name: Upload Release Asset
@@ -49,7 +50,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./homework-04/print_ip-0.0.${{ github.run_number }}-Linux.deb
-          asset_name: print_ip-0.0.${{ github.run_number }}-Linux.deb
+          asset_path: ./homework-05/editor-0.0.${{ github.run_number }}-Linux.deb
+          asset_name: editor-0.0.${{ github.run_number }}-Linux.deb
           asset_content_type: application/vnd.debian.binary-package
  
