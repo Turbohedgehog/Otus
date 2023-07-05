@@ -30,9 +30,9 @@ jobs:
           force_orphan: true
           publish_branch: gh-pages
 
-      - run: cd homework-04 && cmake . -DPATCH_VERSION=${{ github.run_number }}
-      - run: cd homework-04 && cmake --build .
-      - run: cd homework-04 && cmake --build . --target package
+      - run: cd homework-05 && cmake . -DPATCH_VERSION=${{ github.run_number }}
+      - run: cd homework-05 && cmake --build .
+      - run: cd homework-05 && cmake --build . --target package
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
