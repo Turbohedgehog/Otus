@@ -8,19 +8,17 @@ template <typename T, T DefaulValue, std::size_t Dimension>
 class Matrix;
 
 template<typename Array, std::size_t... I>
-auto a2t_impl(const Array& a, std::index_sequence<I...>)
-{
-    return std::make_tuple(a[I]...);
+auto a2t_impl(const Array& a, std::index_sequence<I...>) {
+  return std::make_tuple(a[I]...);
 }
  
 template<typename T, std::size_t N, typename Indices = std::make_index_sequence<N>>
-auto a2t(const std::array<T, N>& a)
-{
-    return a2t_impl(a, Indices{});
+auto a2t(const std::array<T, N>& a) {
+  return a2t_impl(a, Indices{});
 }
 
 template <typename T, T DefaulValue, std::size_t Dimension>
-class ValueType {
+class TypeDeclarator {
  public:
   using value_type = T;
   using matrix_type = Matrix<T, DefaulValue, Dimension>;
@@ -30,43 +28,56 @@ class ValueType {
 };
 
 template <typename T, T DefaulValue, std::size_t Dimension, std::size_t CurrentDimension>
-class ValueHolderViewBase : public ValueType<T, DefaulValue, Dimension> {
+class ValueHolderViewBase : public TypeDeclarator<T, DefaulValue, Dimension> {
  public:
+  using type_declarator = TypeDeclarator<T, DefaulValue, Dimension>;
   static constexpr std::size_t kCurrentDimension = CurrentDimension;
 
-  ValueHolderViewBase(matrix_type& matrix, std::size_t index)
+  ValueHolderViewBase(
+      typename type_declarator::matrix_type& matrix,
+      std::size_t index)
     : matrix_(matrix) {
       address_[kCurrentDimension - 1] = index;
     }
 
-  ValueHolderViewBase(matrix_type& matrix, const index_type& address, std::size_t index)
+  ValueHolderViewBase(
+      typename type_declarator::matrix_type& matrix,
+      const typename type_declarator::index_type& address,
+      std::size_t index)
     : ValueHolderViewBase(matrix, index) {
       address_ = address;
       address_[kCurrentDimension - 1] = index;
     }
 
  protected:
-  matrix_type& matrix_;
-  mutable index_type address_ = { 0 };
+  typename type_declarator::matrix_type& matrix_;
+  mutable typename type_declarator::index_type address_ = { 0 };
 };
 
 template <typename T, T DefaulValue, std::size_t Dimension>
-class ValueHolder : public ValueType<T, DefaulValue, Dimension> {
+class ValueHolder : public TypeDeclarator<T, DefaulValue, Dimension> {
  public:
+  using type_declarator = TypeDeclarator<T, DefaulValue, Dimension>;
   using value_holder_view_base = ValueHolderViewBase<T, DefaulValue, Dimension, Dimension>;
 
   class ValueHolderView : public value_holder_view_base {
    public:
-    ValueHolderView(matrix_type& matrix, size_t index)
+    using type_declarator = typename value_holder_view_base::type_declarator;
+
+   public:
+    ValueHolderView(typename type_declarator::matrix_type& matrix, size_t index)
       : value_holder_view_base(matrix, index)
     {}
 
-    ValueHolderView(matrix_type& matrix, const index_type& address, std::size_t index)
+    ValueHolderView(
+        typename type_declarator::matrix_type& matrix,
+        const typename type_declarator::index_type& address,
+        std::size_t index)
       : value_holder_view_base(matrix, address, index)
     {}
 
     const ValueHolderView& operator[](std::size_t index) const {
-      address_[kDimension - 1] = index;
+      value_holder_view_base::address_[type_declarator::kDimension - 1] = index;
 
       return *this;
     }
@@ -82,30 +93,30 @@ class ValueHolder : public ValueType<T, DefaulValue, Dimension> {
     }
 
     ValueHolderView& operator=(T&& value) {
-      matrix_.set(address_, std::forward<T>(value));
+      value_holder_view_base::matrix_.set(value_holder_view_base::address_, std::forward<T>(value));
 
       return *this;
     }
 
     ValueHolderView& operator=(const T& value) {
-      matrix_.set(address_, value);
+      value_holder_view_base::matrix_.set(value_holder_view_base::address_, value);
 
       return *this;
     }
 
     operator T() const {
-      return matrix_.get(address_);
+      return value_holder_view_base::matrix_.get(value_holder_view_base::address_);
     }
   };
 
   using value_holder_view_type = ValueHolderView;
 
-  ValueHolderView at(matrix_type& matrix, std::size_t index) {
+  ValueHolderView at(typename type_declarator::matrix_type& matrix, std::size_t index) {
     return ValueHolderView(matrix, index);
   }
 
-  int set(const index_type& index, const T& value) {
-    std::size_t key = index[kDimension - 1];
+  int set(const typename type_declarator::index_type& index, const T& value) {
+    std::size_t key = index[type_declarator::kDimension - 1];
     auto it = values_.find(key);
     if (it == values_.end()) {
       if (value == DefaulValue) {
@@ -128,8 +139,8 @@ class ValueHolder : public ValueType<T, DefaulValue, Dimension> {
     return 0;
   }
 
-  int set(const index_type& index, T&& value) {
-    std::size_t key = index[kDimension - 1];
+  int set(const typename type_declarator::index_type& index, T&& value) {
+    std::size_t key = index[type_declarator::kDimension - 1];
     auto it = values_.find(key);
     if (it == values_.end()) {
       if (value == DefaulValue) {
@@ -152,30 +163,30 @@ class ValueHolder : public ValueType<T, DefaulValue, Dimension> {
     return 0;
   }
 
-  T get(const index_type& index) const {
-    std::size_t key = index[kDimension - 1];
+  T get(const typename type_declarator::index_type& index) const {
+    std::size_t key = index[type_declarator::kDimension - 1];
     auto it = values_.find(key);
 
-    return it == values_.end() ? kDefaultValue : it->second;
+    return it == values_.end() ? type_declarator::kDefaultValue : it->second;
   }
 
   bool empty() const {
     return values_.empty();
   }
 
-  bool get_first_index(index_type& index) const {
+  bool get_first_index(typename type_declarator::index_type& index) const {
     if (values_.empty()) {
       return false;
     }
 
     auto it = values_.begin();
-    index[kDimension - 1] = it->first;
+    index[type_declarator::kDimension - 1] = it->first;
 
     return true;
   }
 
-  bool get_next_index(index_type& index) const {
-    std::size_t key = index[kDimension - 1];
+  bool get_next_index(typename type_declarator::index_type& index) const {
+    std::size_t key = index[type_declarator::kDimension - 1];
     auto it = values_.find(key);
     if (it == values_.end()) {
       return false;
@@ -187,7 +198,7 @@ class ValueHolder : public ValueType<T, DefaulValue, Dimension> {
       return false;
     }
 
-    index[kDimension - 1] = it->first;
+    index[type_declarator::kDimension - 1] = it->first;
 
     return true;
   }
@@ -197,8 +208,9 @@ class ValueHolder : public ValueType<T, DefaulValue, Dimension> {
 };
 
 template <typename T, T DefaulValue, std::size_t Dimension, std::size_t CurrentDimension>
-class MatrixHolder : public ValueType<T, DefaulValue, Dimension> {
+class MatrixHolder : public TypeDeclarator<T, DefaulValue, Dimension> {
  public:
+  using type_declarator = TypeDeclarator<T, DefaulValue, Dimension>;
   static constexpr std::size_t kCurrentDimension = CurrentDimension;
   using value_holder = ValueHolder<T, DefaulValue, Dimension>;
   using value_holder_view_base = ValueHolderViewBase<T, DefaulValue, Dimension, CurrentDimension>;
@@ -210,26 +222,36 @@ class MatrixHolder : public ValueType<T, DefaulValue, Dimension> {
   
   class ValueHolderView : public value_holder_view_base {
    public:
-    ValueHolderView(matrix_type& matrix, std::size_t index)
+    using type_declarator = typename value_holder_view_base::type_declarator;
+
+    ValueHolderView(
+        typename type_declarator::matrix_type& matrix,
+        std::size_t index)
       : value_holder_view_base(matrix, index)
     {}
 
-    ValueHolderView(matrix_type& matrix, const index_type& address, std::size_t index)
+    ValueHolderView(
+        typename type_declarator::matrix_type& matrix,
+        const typename type_declarator::index_type& address,
+        std::size_t index)
       : value_holder_view_base(matrix, address, index)
     {}
 
     typename sub_holder_type::value_holder_view_type operator[](std::size_t index) {
-      return sub_holder_type::value_holder_view_type(matrix_, address_, index);
+      return typename sub_holder_type::value_holder_view_type(
+          value_holder_view_base::matrix_,
+          value_holder_view_base::address_,
+          index);
     }
   };
 
   using value_holder_view_type = ValueHolderView;
 
-  ValueHolderView at(matrix_type& matrix, std::size_t index) {
+  ValueHolderView at(typename type_declarator::matrix_type& matrix, std::size_t index) {
     return ValueHolderView(matrix, index);
   }
 
-  int set(const index_type& index, const T& value) {
+  int set(const typename type_declarator::index_type& index, const T& value) {
     std::size_t key = index[kCurrentDimension - 1];
     auto it = subholders_.find(key);
     if (it == subholders_.end()) {
@@ -250,7 +272,7 @@ class MatrixHolder : public ValueType<T, DefaulValue, Dimension> {
     return res;
   }
 
-  int set(const index_type& index, T&& value) {
+  int set(const typename type_declarator::index_type& index, T&& value) {
     std::size_t key = index[kCurrentDimension - 1];
     auto it = subholders_.find(key);
     if (it == subholders_.end()) {
@@ -271,18 +293,18 @@ class MatrixHolder : public ValueType<T, DefaulValue, Dimension> {
     return 0;
   }
 
-  T get(const index_type& index) const {
-    std::size_t key = index[CurrentDimension - 1];
+  T get(const typename type_declarator::index_type& index) const {
+    std::size_t key = index[kCurrentDimension - 1];
     auto it = subholders_.find(key);
 
-    return it == subholders_.end() ? kDefaultValue : it->second.get(index);
+    return it == subholders_.end() ? type_declarator::kDefaultValue : it->second.get(index);
   }
 
   bool empty() const {
     return subholders_.empty();
   }
 
-  bool get_first_index(index_type& index) const {
+  bool get_first_index(typename type_declarator::index_type& index) const {
     if (subholders_.empty()) {
       return false;
     }
@@ -292,7 +314,7 @@ class MatrixHolder : public ValueType<T, DefaulValue, Dimension> {
     return it->second.get_first_index(index);
   }
 
-  bool get_next_index(index_type& index) const {
+  bool get_next_index(typename type_declarator::index_type& index) const {
     if (subholders_.empty()) {
       return false;
     }
@@ -323,13 +345,19 @@ class MatrixHolder : public ValueType<T, DefaulValue, Dimension> {
 };
 
 template <typename T, T DefaulValue, std::size_t Dimension>
-class MatrixIterator : public ValueType<T, DefaulValue, Dimension> {
+class MatrixIterator : public TypeDeclarator<T, DefaulValue, Dimension> {
  public:
-  using tuple_type = decltype(std::tuple_cat(a2t(index_type()), std::declval<std::tuple<T>>()));
+  using type_declarator = TypeDeclarator<T, DefaulValue, Dimension>;
+  using tuple_type = decltype(
+      std::tuple_cat(
+          a2t(typename type_declarator::index_type()),
+          std::declval<std::tuple<T>>()));
 
-  MatrixIterator(matrix_type* matrix, index_type&& index)
+  MatrixIterator(
+      typename type_declarator::matrix_type* matrix,
+      typename type_declarator::index_type&& index)
     : matrix_(matrix)
-    , index_(std::forward<index_type>(index))
+    , index_(std::forward<typename type_declarator::index_type>(index))
   {}
 
   MatrixIterator& operator++() {
@@ -382,18 +410,24 @@ class MatrixIterator : public ValueType<T, DefaulValue, Dimension> {
   }
 
  private:
-  matrix_type* matrix_ = nullptr;
-  index_type index_;
+  typename type_declarator::matrix_type* matrix_ = nullptr;
+  typename type_declarator::index_type index_;
 };
 
 template <typename T, T DefaulValue, std::size_t Dimension>
-class MatrixConstIterator : public ValueType<T, DefaulValue, Dimension> {
+class MatrixConstIterator : public TypeDeclarator<T, DefaulValue, Dimension> {
  public:
-  using tuple_type = decltype(std::tuple_cat(a2t(index_type()), std::declval<std::tuple<T>>()));
+  using type_declarator = TypeDeclarator<T, DefaulValue, Dimension>;
+  using tuple_type = decltype(
+      std::tuple_cat(
+          a2t(typename type_declarator::index_type()),
+          std::declval<std::tuple<T>>()));
 
-  MatrixConstIterator(const matrix_type* matrix, index_type&& index)
+  MatrixConstIterator(
+      const typename type_declarator::matrix_type* matrix,
+      typename type_declarator::index_type&& index)
     : matrix_(matrix)
-    , index_(std::forward<index_type>(index))
+    , index_(std::forward<typename type_declarator::index_type>(index))
   {}
 
   MatrixConstIterator& operator++() {
@@ -446,20 +480,21 @@ class MatrixConstIterator : public ValueType<T, DefaulValue, Dimension> {
   }
 
  private:
-  const matrix_type* matrix_ = nullptr;
-  index_type index_;
+  const typename type_declarator::matrix_type* matrix_ = nullptr;
+  typename type_declarator::index_type index_;
 };
 
 template <typename T, T DefaulValue = 0, std::size_t Dimension = 2>
-class Matrix : public ValueType<T, DefaulValue, Dimension> {
+class Matrix : public TypeDeclarator<T, DefaulValue, Dimension> {
  public:
+  using type_declarator = TypeDeclarator<T, DefaulValue, Dimension>;
   using matrix_holder_type = typename MatrixHolder<T, DefaulValue, Dimension, 0>::sub_holder_type;
   using matrix_holder_view_type = typename matrix_holder_type::value_holder_view_type;
   using iterator = MatrixIterator<T, DefaulValue, Dimension>;
   using const_iterator = MatrixConstIterator<T, DefaulValue, Dimension>;
 
-  friend class iterator;
-  friend class const_iterator;
+  friend iterator;
+  friend const_iterator;
 
   std::size_t size() const {
     return size_;
@@ -469,7 +504,7 @@ class Matrix : public ValueType<T, DefaulValue, Dimension> {
     return matrix_holder_.at(*this, key);
   }
 
-  void set(const index_type& index, const T& value) {
+  void set(const typename type_declarator::index_type& index, const T& value) {
     auto diff = matrix_holder_.set(index, value);
     if (diff > 0) {
       ++size_;
@@ -478,7 +513,7 @@ class Matrix : public ValueType<T, DefaulValue, Dimension> {
     }
   }
 
-  void set(const index_type& index, T&& value) {
+  void set(const typename type_declarator::index_type& index, T&& value) {
     auto diff = matrix_holder_.set(index, std::forward<T>(value));
     if (diff > 0) {
       ++size_;
@@ -487,12 +522,12 @@ class Matrix : public ValueType<T, DefaulValue, Dimension> {
     }
   }
 
-  T get(const index_type& index) const {
+  T get(const typename type_declarator::index_type& index) const {
     return matrix_holder_.get(index);
   }
 
   iterator begin() {
-    index_type index = { 0 };
+    typename type_declarator::index_type index = { 0 };
     if (matrix_holder_.get_first_index(index)) {
       return iterator(this, std::move(index));  
     }
@@ -501,11 +536,11 @@ class Matrix : public ValueType<T, DefaulValue, Dimension> {
   }
 
   iterator end() { 
-    return iterator(nullptr, index_type());
+    return iterator(nullptr, typename type_declarator::index_type());
   }
 
   const_iterator begin() const {
-    index_type index = { 0 };
+    typename type_declarator::index_type index = { 0 };
     if (matrix_holder_.get_first_index(index)) {
       return const_iterator(this, std::move(index));  
     }
@@ -514,11 +549,11 @@ class Matrix : public ValueType<T, DefaulValue, Dimension> {
   }
 
   const_iterator end() const {
-    return const_iterator(nullptr, index_type());
+    return const_iterator(nullptr, typename type_declarator::index_type());
   }
 
  private:
-  bool get_next_index(index_type& index) const {
+  bool get_next_index(typename type_declarator::index_type& index) const {
     return matrix_holder_.get_next_index(index);
   }
   std::size_t size_ = 0;
