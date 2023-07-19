@@ -1,9 +1,9 @@
-name: '[Homework-06] matrix'
+name: '[Homework-07] bulk'
 
 on:
   push:
     branches:
-      - f/homework-06
+      - f/homework-07
 
 jobs:
   build:
@@ -28,17 +28,17 @@ jobs:
           force_orphan: true
           publish_branch: gh-pages
 
-      - run: cd homework-06 && cmake . -DPATCH_VERSION=${{ github.run_number }}
-      - run: cd homework-06 && cmake --build .
-      - run: cd homework-06 && cmake --build . --target package
+      - run: cd homework-07 && cmake . -DPATCH_VERSION=${{ github.run_number }}
+      - run: cd homework-07 && cmake --build .
+      - run: cd homework-07 && cmake --build . --target package
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: hw_06_${{ github.run_number }}
-          release_name: HW-06 Release ${{ github.run_number }}
+          tag_name: hw_07_${{ github.run_number }}
+          release_name: HW-07 Release ${{ github.run_number }}
           draft: false
           prerelease: false
       - name: Upload Release Asset
@@ -48,7 +48,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./homework-06/matrix-0.0.${{ github.run_number }}-Linux.deb
-          asset_name: matrix-0.0.${{ github.run_number }}-Linux.deb
+          asset_path: ./homework-07/bulk-0.0.${{ github.run_number }}-Linux.deb
+          asset_name: bulk-0.0.${{ github.run_number }}-Linux.deb
           asset_content_type: application/vnd.debian.binary-package
  
