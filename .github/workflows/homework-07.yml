@@ -48,7 +48,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./homework-07/editor-0.0.${{ github.run_number }}-Linux.deb
-          asset_name: editor-0.0.${{ github.run_number }}-Linux.deb
+          asset_path: ./homework-07/bulk-0.0.${{ github.run_number }}-Linux.deb
+          asset_name: bulk-0.0.${{ github.run_number }}-Linux.deb
           asset_content_type: application/vnd.debian.binary-package
  
