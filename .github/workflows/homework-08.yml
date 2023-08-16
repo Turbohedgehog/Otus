@@ -1,0 +1,70 @@
+name: '[Homework-08] bayan'
+
+on:
+  push:
+    branches:
+      - f/homework-08
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:        
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+      #- run: sudo apt-get update && sudo apt-get install libboost-test-dev -y
+      - run: sudo apt-get update &&sudo apt-get install libboost-all-dev -y
+      #- name: Build Boost
+      #  id: boost
+      #  uses: egor-tensin/build-boost@v1
+      #  with:
+      #    version: 1.81.0
+      #    libraries: program_options
+      #    platform: x64
+      #    configuration: Release
+      #- run: echo ${{ steps.boost.outputs.root }}
+      #- run: echo ${{ steps.boost.outputs.librarydir }}
+      #
+      - run: cd homework-08 && cmake . -DPATCH_VERSION=${{ github.run_number }}
+      #  env:
+      #    BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}
+      #    BOOST_INCLUDEDIR: ${{ steps.install-boost.outputs.BOOST_ROOT }}
+      #    BOOST_LIBRARYDIR: ${{ steps.boost.outputs.librarydir }}
+      - run: cd homework-08 && cmake --build .
+      - run: cd homework-08 && cmake --build . --target package
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: hw_08_${{ github.run_number }}
+          release_name: HW-08 Release ${{ github.run_number }}
+          draft: false
+          prerelease: false
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./homework-08/bayan-0.0.${{ github.run_number }}-Linux.deb
+          asset_name: bayan-0.0.${{ github.run_number }}-Linux.deb
+          asset_content_type: application/vnd.debian.binary-package
+      - name: Doxygen Action
+        uses: mattnotmitt/doxygen-action@v1.1.0
+        with:
+            doxyfile-path: Doxyfile
+            working-directory: .
+      - name: GH Pages Deployment
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./doc/html
+          enable_jekyll: false
+          allow_empty_commit: false
+          force_orphan: true
+          publish_branch: gh-pages
+ 
