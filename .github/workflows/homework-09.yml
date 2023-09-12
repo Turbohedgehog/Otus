@@ -1,0 +1,53 @@
+name: '[Homework-09] async'
+
+on:
+  push:
+    branches:
+      - f/homework-09
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:        
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+      - run: cd homework-09 && cmake . -DPATCH_VERSION=${{ github.run_number }}
+      - run: cd homework-09 && cmake --build .
+      - run: cd homework-09 && cmake --build . --target package
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: hw_09_${{ github.run_number }}
+          release_name: HW-09 Release ${{ github.run_number }}
+          draft: false
+          prerelease: false
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./homework-09/async-0.0.${{ github.run_number }}-Linux.deb
+          asset_name: async-0.0.${{ github.run_number }}-Linux.deb
+          asset_content_type: application/vnd.debian.binary-package
+      - name: Doxygen Action
+        uses: mattnotmitt/doxygen-action@v1.1.0
+        with:
+            doxyfile-path: Doxyfile
+            working-directory: .
+      - name: GH Pages Deployment
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./doc/html
+          enable_jekyll: false
+          allow_empty_commit: false
+          force_orphan: true
+          publish_branch: gh-pages
+ 

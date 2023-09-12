@@ -115,7 +115,7 @@ WARN_LOGFILE           =
 #---------------------------------------------------------------------------
 # Configuration options related to the input files
 #---------------------------------------------------------------------------
-INPUT                  = homework-04 homework-05 homework-06 homework-07 homework-08
+INPUT                  = homework-04 homework-05 homework-06 homework-07 homework-08 homework-09
 INPUT_ENCODING         = UTF-8
 FILE_PATTERNS          = *.c \
                          *.cc \
