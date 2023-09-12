@@ -1,0 +1,13 @@
+<map id="homework_05::ComponentBase" name="homework_05::ComponentBase">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,70,210,96"/>
+<area shape="rect" id="Node000002" href="$d2/d55/classhomework__05_1_1Coordinate2DComponent.html" title=" " alt="" coords="275,5,452,46"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="183,64,274,43,275,48,184,69"/>
+<area shape="rect" id="Node000003" href="$d1/d5f/classhomework__05_1_1NameComponent.html" title=" " alt="" coords="259,70,468,96"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="225,80,258,80,258,86,225,86"/>
+<area shape="rect" id="Node000004" href="$d3/d14/classhomework__05_1_1ShapeComponent.html" title=" " alt="" coords="258,120,469,145"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="194,97,293,116,292,121,193,102"/>
+<area shape="rect" id="Node000005" href="$d6/dd7/classhomework__05_1_1CircleComponent.html" title=" " alt="" coords="530,94,737,120"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="484,118,529,114,529,119,485,124"/>
+<area shape="rect" id="Node000006" href="$d0/d9e/classhomework__05_1_1RectangleComponent.html" title=" " alt="" coords="517,144,749,169"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="485,140,517,143,516,149,484,146"/>
+</map>

@@ -1,0 +1,21 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,197,135,238"/>
+<area shape="rect" id="Node000001" href="$d4/d3b/classhomework__05_1_1ComponentHandler.html" title=" " alt="" coords="183,130,402,156"/>
+<area shape="poly" id="edge25_Node000000_Node000001" title=" " alt="" coords="125,188,182,164,220,154,221,159,184,170,127,193"/>
+<area shape="rect" id="Node000006" href="$d6/db6/classhomework__05_1_1ConsoleAction.html" title=" " alt="" coords="196,180,389,205"/>
+<area shape="poly" id="edge30_Node000000_Node000006" title=" " alt="" coords="150,206,195,201,196,206,150,211"/>
+<area shape="rect" id="Node000007" href="$d1/d3d/classhomework__05_1_1Editor.html" title=" " alt="" coords="222,229,363,255"/>
+<area shape="poly" id="edge31_Node000000_Node000007" title=" " alt="" coords="150,224,221,231,221,237,150,229"/>
+<area shape="rect" id="Node000008" href="$d3/d5d/classhomework__05_1_1Toolset.html" title=" " alt="" coords="217,278,368,304"/>
+<area shape="poly" id="edge32_Node000000_Node000008" title=" " alt="" coords="127,242,184,264,221,275,220,280,182,270,125,247"/>
+<area shape="rect" id="Node000002" href="$d8/d27/classhomework__05_1_1ConsoleCircleComponentHandler.html" title=" " alt="" coords="468,5,656,46"/>
+<area shape="poly" id="edge26_Node000001_Node000002" title=" " alt="" coords="327,119,383,88,449,57,483,44,485,49,451,61,386,93,330,124"/>
+<area shape="rect" id="Node000003" href="$d3/df3/classhomework__05_1_1ConsoleCoordinate2DComponentHandler.html" title=" " alt="" coords="450,71,674,111"/>
+<area shape="poly" id="edge27_Node000001_Node000003" title=" " alt="" coords="377,124,453,109,454,115,378,129"/>
+<area shape="rect" id="Node000004" href="$da/dcb/classhomework__05_1_1ConsoleNameComponentHandler.html" title=" " alt="" coords="467,136,657,177"/>
+<area shape="poly" id="edge28_Node000001_Node000004" title=" " alt="" coords="418,147,467,149,466,154,417,152"/>
+<area shape="rect" id="Node000005" href="$d7/d68/classhomework__05_1_1ConsoleRectangleComponentHandler.html" title=" " alt="" coords="456,201,669,242"/>
+<area shape="poly" id="edge29_Node000001_Node000005" title=" " alt="" coords="379,158,403,164,451,186,487,198,486,203,449,191,401,170,378,163"/>
+<area shape="rect" id="Node000009" href="$d8/d48/classhomework__05_1_1ConsoleToolset.html" title=" " alt="" coords="463,278,661,304"/>
+<area shape="poly" id="edge33_Node000008_Node000009" title=" " alt="" coords="384,288,463,288,463,294,384,294"/>
+</map>

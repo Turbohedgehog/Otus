@@ -1,0 +1,14 @@
+<map id="homework&#45;05/toolset.h" name="homework&#45;05/toolset.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,158,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="36,153,90,178"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="62,34,37,53,17,80,15,96,19,111,39,140,35,144,14,114,9,96,12,78,33,50,59,29"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="26,79,137,105"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="84,31,84,63,79,63,79,31"/>
+<area shape="rect" id="Node000004" href="$df/d5b/common__types_8h.html" title=" " alt="" coords="161,79,280,105"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="106,29,184,69,182,74,104,34"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="195,108,105,148,102,143,192,103"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="145,153,213,178"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="216,106,196,141,191,138,211,104"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="237,153,283,178"/>
+<area shape="poly" id="edge6_Node000004_Node000006" title=" " alt="" coords="229,104,248,138,244,140,224,106"/>
+</map>

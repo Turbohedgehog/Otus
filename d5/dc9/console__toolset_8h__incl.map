@@ -1,0 +1,18 @@
+<map id="homework&#45;05/console_toolset.h" name="homework&#45;05/console_toolset.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="14,5,162,46"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,94,77,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="78,48,58,82,54,79,74,45"/>
+<area shape="rect" id="Node000003" href="$df/d02/toolset_8h.html" title=" " alt="" coords="101,94,171,120"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="102,45,123,79,118,82,97,48"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="90,241,144,267"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="116,122,91,142,71,169,69,184,73,200,94,229,89,232,68,202,63,185,67,167,87,138,113,118"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="81,168,191,193"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="138,120,138,152,133,152,133,120"/>
+<area shape="rect" id="Node000006" href="$df/d5b/common__types_8h.html" title=" " alt="" coords="215,168,334,193"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="160,118,238,158,236,162,158,123"/>
+<area shape="poly" id="edge6_Node000006_Node000004" title=" " alt="" coords="249,196,159,237,157,232,247,191"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="199,241,267,267"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="270,195,250,229,245,226,265,192"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="291,241,338,267"/>
+<area shape="poly" id="edge8_Node000006_Node000008" title=" " alt="" coords="283,192,303,227,298,229,279,195"/>
+</map>

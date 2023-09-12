@@ -1,0 +1,20 @@
+<map id="homework&#45;05/component.cpp" name="homework&#45;05/component.cpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="83,5,275,31"/>
+<area shape="rect" id="Node000002" href="$d6/dcf/component_8h.html" title=" " alt="" coords="59,79,155,105"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="169,33,132,70,128,66,165,29"/>
+<area shape="rect" id="Node000008" href="$d0/de7/component__handler_8h.html" title=" " alt="" coords="179,79,323,105"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="193,29,230,66,226,70,189,33"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,153,70,178"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="97,107,62,143,58,140,93,103"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="92,226,146,252"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="110,105,119,211,114,211,105,105"/>
+<area shape="rect" id="Node000005" href="$df/d5b/common__types_8h.html" title=" " alt="" coords="145,153,264,178"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="125,103,177,141,174,146,122,107"/>
+<area shape="poly" id="edge5_Node000005_Node000004" title=" " alt="" coords="191,181,146,218,143,214,188,177"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="260,226,327,252"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="221,177,268,214,265,219,218,181"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="181,226,227,252"/>
+<area shape="poly" id="edge7_Node000005_Node000007" title=" " alt="" coords="207,179,207,211,202,211,202,179"/>
+<area shape="poly" id="edge10_Node000008_Node000005" title=" " alt="" coords="245,106,223,141,218,138,241,103"/>
+<area shape="poly" id="edge9_Node000008_Node000006" title=" " alt="" coords="259,104,279,152,292,211,287,212,274,153,254,106"/>
+</map>
